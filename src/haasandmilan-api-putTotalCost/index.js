@@ -8,8 +8,8 @@ const clearItems = async () => {
     const { Items } = await dynamodb.scan({
         TableName
     }).promise();
-    console.log(Items);
-    do {
+    
+    while (Items.length > 0) {
         await dynamodb.deleteItem({
             TableName,
             Key: {
@@ -18,16 +18,14 @@ const clearItems = async () => {
                 }
             }
         }).promise();
-    } while (Items.length > 0);
+    }
 };
 
 const putItem = async (Item) => {
-    await dynamodb.putItem({
+    return (await dynamodb.putItem({
         TableName,
         Item
-    }).promise();  
-    
-    return Item;
+    }).promise());
 };
 // DynamoDB
 
@@ -40,11 +38,15 @@ const date = new Date();
 const SPLIT = "T";
 
 const getTimePeriod = (month, day) => {
-    return new Date(date.getFullYear(), month, day).toISOString().split(SPLIT)[0];
+    return new Date(
+        date.getFullYear(),
+        month,
+        day
+    ).toISOString().split(SPLIT)[0];
 };
 
-const Start = getTimePeriod(date.getMonth(), 1);
-const End = getTimePeriod(date.getMonth() + 1, 0);
+const Start = getTimePeriod(date.getMonth()-1, 1);
+const End = getTimePeriod(date.getMonth() , 0);
 
 const Granularity = "MONTHLY";
 const Metrics = ["AmortizedCost"];
@@ -61,7 +63,6 @@ const getCostAndUsage = async () => {
         Metrics
     }).promise();
 };
-// Cost Explorer
 
 exports.handler = async (params, context) => {
     const data = await getCostAndUsage();
