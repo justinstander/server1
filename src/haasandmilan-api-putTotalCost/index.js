@@ -30,7 +30,7 @@ const putItem = async (Item) => {
 // DynamoDB
 
 // Cost Explorer
-const CostExplorer = require('aws-sdk/clients/costexplorer');
+const CostExplorer = require("aws-sdk/clients/costexplorer");
 const costexplorer = new CostExplorer();
 
 const date = new Date();
@@ -67,8 +67,6 @@ const getCostAndUsage = async () => {
 exports.handler = async (params, context) => {
   const data = await getCostAndUsage();
   
-  console.log(JSON.stringify(data,null,4));
-
   await clearItems();
   
   return await putItem({
