@@ -32,4 +32,4 @@ const getCostAndUsage = async () => {
   }).promise();
 };
 
-module.exports = { getCostAndUsage }
+module.exports = { getCostAndUsage };

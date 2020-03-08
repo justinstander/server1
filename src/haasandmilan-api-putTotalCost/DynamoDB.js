@@ -30,4 +30,4 @@ const putItem = async (Item) => {
 module.exports = {
   clearItems,
   putItem
-}
+};
