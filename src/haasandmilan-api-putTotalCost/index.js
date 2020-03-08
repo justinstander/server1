@@ -5,20 +5,20 @@ const dynamodb = new DynamoDB();
 const TableName = "CostAndUsage";
 
 const clearItems = async () => {
-    const { Items } = await dynamodb.scan({
-        TableName
+  const { Items } = await dynamodb.scan({
+    TableName
+  }).promise();
+  
+  while (Items.length > 0) {
+    await dynamodb.deleteItem({
+      TableName,
+      Key: {
+        AwsRequestId: {
+          S: Items.pop().AwsRequestId.S
+        }
+      }
     }).promise();
-    
-    while (Items.length > 0) {
-        await dynamodb.deleteItem({
-            TableName,
-            Key: {
-                AwsRequestId: {
-                    S: Items.pop().AwsRequestId.S
-                }
-            }
-        }).promise();
-    }
+  }
 };
 
 const putItem = async (Item) => {
@@ -38,11 +38,11 @@ const date = new Date();
 const SPLIT = "T";
 
 const getTimePeriod = (month, day) => {
-    return new Date(
-        date.getFullYear(),
-        month,
-        day
-    ).toISOString().split(SPLIT)[0];
+  return new Date(
+    date.getFullYear(),
+    month,
+    day
+  ).toISOString().split(SPLIT)[0];
 };
 
 const Start = getTimePeriod(date.getMonth()-1, 1);
@@ -52,29 +52,31 @@ const Granularity = "MONTHLY";
 const Metrics = ["AmortizedCost"];
 
 const TimePeriod = {
-    Start,
-    End
+  Start,
+  End
 };
 
 const getCostAndUsage = async () => {
-    return await costexplorer.getCostAndUsage({
-        TimePeriod,
-        Granularity,
-        Metrics
-    }).promise();
+  return await costexplorer.getCostAndUsage({
+    TimePeriod,
+    Granularity,
+    Metrics
+  }).promise();
 };
 
 exports.handler = async (params, context) => {
-    const data = await getCostAndUsage();
-    
-    await clearItems();
-    
-    return await putItem({
-        AwsRequestId: {
-            S: context.awsRequestId
-        }, 
-        Total: {
-            S: `$${data.ResultsByTime[0].Total.AmortizedCost.Amount}`
-        }
-    });
+  const data = await getCostAndUsage();
+  
+  console.log(JSON.stringify(data,null,4));
+
+  await clearItems();
+  
+  return await putItem({
+    AwsRequestId: {
+      S: context.awsRequestId
+    }, 
+    Total: {
+      S: `$${data.ResultsByTime[0].Total.AmortizedCost.Amount}`
+    }
+  });
 };
