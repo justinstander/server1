@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "invoke": "./invoke.sh",
-    "deploy": "./deploy.sh"
+    "deploy": "./deploy.sh",
+    "invalidate": "./invalidate.sh"
   },
   "repository": {
     "type": "git",
