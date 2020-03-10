@@ -18,7 +18,9 @@
     "url": "https://github.com/justinstander/server1/issues"
   },
   "homepage": "https://github.com/justinstander/server1#readme",
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.15"
+  },
   "devDependencies": {
     "lambda-local": "^1.7.1"
   }
