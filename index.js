@@ -1,14 +1,16 @@
 const _ = require("lodash");
 
+const EMPTY_STRING = "";
+
 const MODULE_NOT_FOUND = "MODULE_NOT_FOUND";
 
 const getUri = (event) => {
   return _.get(
     event,
     "Records[0].cf.request.uri",
-    ""
+    EMPTY_STRING
   ).substring(1).split("/").filter((item) => {
-    return item !== '';
+    return item !== EMPTY_STRING;
   });
 };
 
@@ -25,7 +27,6 @@ const forbidden = (body) => response(body, "403", "Forbidden");
 const success = (body) => response(body, "200", "OK");
 
 const getError = (code) => {
-  console.log('ERROR CODE', code);
   switch(code) {
     case "AccessDeniedException":
       return forbidden("Access Denied");
@@ -48,8 +49,7 @@ exports.handler = async (event, context) => {
 
   if (uri.length > 0) {
     return await callMethod(uri[0], event, context).catch((error) => {
-      console.error(error.message);
-      return getError(error.code)
+      return getError(error.code);
     });
   } else {
     return notFound("Hungry for Apples?");

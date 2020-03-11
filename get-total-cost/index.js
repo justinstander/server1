@@ -12,4 +12,3 @@ exports.handler = async (params, context) => {
   
   return total.S;
 };
-
