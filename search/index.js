@@ -6,7 +6,7 @@ const dynamodb = new DynamoDB();
 const TableName = "CostAndUsage";
 
 exports.handler = async (event) => {
-	const search = _.get(event, 'Records[0].cf.request.body.search');
+	const search = _.get(event, "Records[0].cf.request.body.search");
 
     return (await dynamodb.scan({
         TableName,
