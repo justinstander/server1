@@ -1,20 +1,38 @@
 const _ = require("lodash");
 const fs = require("fs");
 
+// Constants
 const EMPTY_STRING = "";
 const FORWARD_SLASH = "/";
 const BODY_ENCODING = "text";
+
+const HTTP_STATUS_500 = "500";
+const HTTP_STATUS_404 = "404";
+const HTTP_STATUS_403 = "403";
+const HTTP_STATUS_200 = "200";
+
+// Constants - AWS
 const REQUEST_URI = "Records[0].cf.request.uri";
+const REQUEST_METHOD = "Records[0].cf.request.method";
+const REQUEST_BODY = "Records[0].cf.request.body";
 
 const ERROR_ACCESS_DENIED_EXCEPTION = "AccessDeniedException";
+const ERROR_VALIDATION_EXCEPTION = "ValidationException";
+
+// Constants - NodeJS
 const ERROR_MODULE_NOT_FOUND = "MODULE_NOT_FOUND";
 
-const modules = (name) => {
+// Methods
+const getPropertyFromEvent = (event, property) => _.get(
+  event,
+  property,
+  EMPTY_STRING
+);
+
+const getModule = (name) => {
   switch(name) {
-    case "get-total-cost":
-      return require("./get-total-cost/");
-    case "put-total-cost":
-      return require("./put-total-cost/");
+    case "total-cost":
+      return require("./total-cost/");
     case "search":
       return require("./search/");
     default:
@@ -22,14 +40,41 @@ const modules = (name) => {
   }
 };
 
-const getUri = (event) => {
-  return _.get(
-    event,
-    REQUEST_URI,
-    EMPTY_STRING
-  ).substring(1).split(FORWARD_SLASH).filter((item) => {
-    return item !== EMPTY_STRING;
-  });
+const getBody = (event) => getPropertyFromEvent(
+  event,
+  REQUEST_BODY
+);
+
+const getMethod = (event) => getPropertyFromEvent(
+  event,
+  REQUEST_METHOD
+);
+
+const getUri = (event) => getPropertyFromEvent(
+  event,
+  REQUEST_URI
+).substring(1).split(
+  FORWARD_SLASH
+).filter(
+  (item) => (item !== EMPTY_STRING)
+);
+
+const callMethod = async (awsRequestId, name, method, body) => success(
+  await getModule(name).handler(awsRequestId, method, body)
+);
+
+// Methods - Transaction
+const getError = ({code, message}) => {
+  switch(code) {
+    case ERROR_VALIDATION_EXCEPTION:
+      return internalError(message);
+    case ERROR_ACCESS_DENIED_EXCEPTION:
+      return forbidden(message);
+    case ERROR_MODULE_NOT_FOUND:
+      return notFound(message);
+    default:
+      return notFound(message);
+  }
 };
 
 const response = (body, status, statusDescription, bodyEncoding = BODY_ENCODING) => ({
@@ -39,37 +84,27 @@ const response = (body, status, statusDescription, bodyEncoding = BODY_ENCODING)
   statusDescription
 });
 
-const notFound = (body) => response(body, "404", "Not Found");
+const internalError = (body) => response(body, HTTP_STATUS_500, "Internal Server Error");
 
-const forbidden = (body) => response(body, "403", "Forbidden");
+const notFound = (body) => response(body, HTTP_STATUS_404, "Not Found");
 
-const success = (body) => response(body, "200", "OK");
+const forbidden = (body) => response(body, HTTP_STATUS_403, "Forbidden");
 
-const getError = (code) => {
-  switch(code) {
-    case ERROR_ACCESS_DENIED_EXCEPTION:
-      return forbidden("Access Denied");
-    case ERROR_MODULE_NOT_FOUND:
-      return notFound("Module Not Found");
-    default:
-      return notFound("Not Found");
-  }
-};
+const success = (body) => response(body, HTTP_STATUS_200, "OK");
 
-const callMethod = async (method, event, context) => {
-  return success(await modules(method).handler(
-    event,
-    context
-  ));
-};
-
+// Handler
 exports.handler = async (event, context) => {
   const uri = getUri(event);
 
   if (uri.length > 0) {
-    return await callMethod(uri[0], event, context).catch((error) => {
-      return getError(error.code);
-    });
+    return await callMethod(
+      context.awsRequestId, 
+      uri[0],
+      getMethod(event),
+      getBody(event)
+    ).catch(
+      (error) => {console.error("error",error); getError(error)}
+    );
   } else {
     return notFound("Hungry for Apples?");
   }
