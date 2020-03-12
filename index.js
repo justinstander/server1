@@ -64,19 +64,6 @@ const callMethod = async (awsRequestId, name, method, body) => success(
 );
 
 // Methods - Transaction
-const getError = ({code, message}) => {
-  switch(code) {
-    case ERROR_VALIDATION_EXCEPTION:
-      return internalError(message);
-    case ERROR_ACCESS_DENIED_EXCEPTION:
-      return forbidden(message);
-    case ERROR_MODULE_NOT_FOUND:
-      return notFound(message);
-    default:
-      return notFound(message);
-  }
-};
-
 const response = (body, status, statusDescription, bodyEncoding = BODY_ENCODING) => ({
   body,
   bodyEncoding,
@@ -91,6 +78,19 @@ const notFound = (body) => response(body, HTTP_STATUS_404, "Not Found");
 const forbidden = (body) => response(body, HTTP_STATUS_403, "Forbidden");
 
 const success = (body) => response(body, HTTP_STATUS_200, "OK");
+
+const getError = ({code, message}) => {
+  switch(code) {
+    case ERROR_VALIDATION_EXCEPTION:
+      return internalError(message);
+    case ERROR_ACCESS_DENIED_EXCEPTION:
+      return forbidden(message);
+    case ERROR_MODULE_NOT_FOUND:
+      return notFound(message);
+    default:
+      return notFound(message);
+  }
+};
 
 // Handler
 exports.handler = async (event, context) => {

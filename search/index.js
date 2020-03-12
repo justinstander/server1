@@ -5,6 +5,4 @@ exports.handler = async (awsRequestId, method, body) => {
     default:
       throw new Error(`No Method '${method}'`);
   } 
-  
-  return method;
 };
