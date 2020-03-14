@@ -59,10 +59,6 @@ const getUri = (event) => getPropertyFromEvent(
   (item) => (item !== EMPTY_STRING)
 );
 
-const callMethod = async (awsRequestId, name, method, body) => success(
-  await getModule(name).handler(awsRequestId, method, body)
-);
-
 // Methods - Transaction
 const response = (body, status, statusDescription, bodyEncoding = BODY_ENCODING) => ({
   body,
@@ -92,6 +88,10 @@ const getError = ({code, message}) => {
   }
 };
 
+const callMethod = async (awsRequestId, name, method, body) => success(
+  await getModule(name).handler(awsRequestId, method, body)
+);
+
 // Handler
 exports.handler = async (event, context) => {
   const uri = getUri(event);
@@ -103,7 +103,7 @@ exports.handler = async (event, context) => {
       getMethod(event),
       getBody(event)
     ).catch(
-      (error) => {console.error("error",error); getError(error)}
+      getError
     );
   } else {
     return notFound("Hungry for Apples?");
