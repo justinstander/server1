@@ -6,10 +6,7 @@
           "distributionId": "EXAMPLE"
         },
         "request": {
-          "uri": "/search",
-          "body": {
-            "search":"3"
-          },
+          "uri": "/total-cost",
           "method": "PUT",
           "clientIp": "2001:cdba::3257:9652",
           "headers": {
