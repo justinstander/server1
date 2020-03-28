@@ -36,7 +36,7 @@ const getModule = (name) => {
     case "search":
       return require("./search/");
     default:
-      throw new Error("Module Not Found");
+      throw new Error(`${name} Not Found`);
   }
 };
 
