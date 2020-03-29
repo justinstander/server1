@@ -1,3 +1,5 @@
+const { Http405 } = require("../errors");
+
 exports.handler = async (awsRequestId, method, body) => {
   switch(method) {
     case "GET":
@@ -5,6 +7,6 @@ exports.handler = async (awsRequestId, method, body) => {
     case "PUT":
       return (await require("./put").handler(awsRequestId, body));
     default:
-      throw new Error(`No Method '${method}'`);
+      throw new Http405(`No Method '${method}'`);
   }
 };
