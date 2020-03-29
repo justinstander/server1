@@ -1,7 +1,7 @@
 const status = "404";
 const description = "Not Found";
 
-module.exports = class Http405 extends Error {
+module.exports = class extends Error {
   static get STATUS() {
     return status;
   }

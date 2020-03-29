@@ -1,7 +1,7 @@
 const status = "403";
 const description = "Forbidden";
 
-module.exports = class Http405 extends Error {
+module.exports = class extends Error {
   static get STATUS() {
     return status;
   }
