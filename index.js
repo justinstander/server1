@@ -50,7 +50,7 @@ const getModule = (name) => {
     default:
       throw getCustomError(
         ERROR_MODULE_NOT_FOUND,
-        'Module Not Found'
+        "Module Not Found"
       );
   }
 };
