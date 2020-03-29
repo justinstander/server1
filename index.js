@@ -41,11 +41,7 @@ const getModule = (name) => {
     case "search":
       return require("./search/");
     case Http403.STATUS:
-      // throw getCustomError(
-      //   name,
-      //   HTTP_STATUS_FORBIDDEN
-      // );
-      throw new Http403();
+      throw new Http403(`${name} forbidden`);
     default:
       throw new Http404(`${name} Not Found`);
   }
