@@ -1,5 +1,7 @@
 const _ = require("lodash");
+
 const { Http422 } = require("../../errors");
+
 const DynamoDB = require("aws-sdk/clients/dynamodb");
 const dynamodb = new DynamoDB();
 
@@ -19,11 +21,11 @@ exports.handler = async (body) => {
     throw new Http422(`Unable to parse JSON Body: ${error.message}: [${string}] [${body.data}]`);
   }
 
-  return (await dynamodb.scan({
+  return JSON.stringify((await dynamodb.scan({
     TableName,
     FilterExpression: "contains(AwsRequestId, :awsrequestid)", 
     ExpressionAttributeValues: {
       ":awsrequestid": {S: search}
     }
-  }).promise()).Items;
+  }).promise()).Items);
 };

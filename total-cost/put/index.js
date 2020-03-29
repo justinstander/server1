@@ -8,12 +8,12 @@ exports.handler = async (awsRequestId) => {
 
   await clearItems();
   
-  return await putItem({
+  return await JSON.stringify(putItem({
     AwsRequestId: {
       S: awsRequestId
     }, 
     Total: {
       S: `$${data.ResultsByTime[0].Total.AmortizedCost.Amount}`
     }
-  });
+  }));
 };
