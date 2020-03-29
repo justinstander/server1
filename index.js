@@ -11,6 +11,8 @@ const HTTP_STATUS_404 = "404";
 const HTTP_STATUS_403 = "403";
 const HTTP_STATUS_200 = "200";
 
+const HTTP_STATUS_FORBIDDEN = "Forbidden";
+
 // Constants - AWS
 const REQUEST_URI = "Records[0].cf.request.uri";
 const REQUEST_METHOD = "Records[0].cf.request.method";
@@ -21,6 +23,12 @@ const ERROR_VALIDATION_EXCEPTION = "ValidationException";
 
 // Constants - NodeJS
 const ERROR_MODULE_NOT_FOUND = "MODULE_NOT_FOUND";
+
+const getCustomError = (code, message) => {
+  const error = new Error(message);
+  error.code = code;
+  return error;
+}
 
 // Methods
 const getPropertyFromEvent = (event, property) => _.get(
@@ -35,8 +43,16 @@ const getModule = (name) => {
       return require("./total-cost/");
     case "search":
       return require("./search/");
+    case HTTP_STATUS_403:
+      throw getCustomError(
+        name,
+        HTTP_STATUS_FORBIDDEN
+      );
     default:
-      throw new Error(`${name} Not Found`);
+      throw getCustomError(
+        ERROR_MODULE_NOT_FOUND,
+        'Module Not Found'
+      );
   }
 };
 
@@ -76,10 +92,12 @@ const forbidden = (body) => response(body, HTTP_STATUS_403, "Forbidden");
 const success = (body) => response(body, HTTP_STATUS_200, "OK");
 
 const getError = ({code, message}) => {
+  console.log(code);
   switch(code) {
     case ERROR_VALIDATION_EXCEPTION:
       return internalError(message);
     case ERROR_ACCESS_DENIED_EXCEPTION:
+    case HTTP_STATUS_403:
       return forbidden(message);
     case ERROR_MODULE_NOT_FOUND:
       return notFound(message);
