@@ -91,7 +91,6 @@ const forbidden = (body) => response(body, HTTP_STATUS_403, "Forbidden");
 const success = (body) => response(body, HTTP_STATUS_200, "OK");
 
 const getError = ({code, message}) => {
-  console.log(code);
   switch(code) {
     case ERROR_VALIDATION_EXCEPTION:
       return internalError(message);
