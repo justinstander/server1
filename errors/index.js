@@ -4,8 +4,8 @@ const Http405 = require("./Http405");
 const Http500 = require("./Http500");
 
 module.exports = {
-	Http403,
-	Http404, 
-	Http405,
-	Http500
+  Http403,
+  Http404, 
+  Http405,
+  Http500
 };
