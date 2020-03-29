@@ -8,7 +8,10 @@
         "request": {
           "uri": "/search",
           "body": {
-            "search":"5"
+            "action": "read-only",
+            "data": "eyJzZWFyY2giOjd9",
+            "encoding": "base64",
+            "inputTruncated": false
           },
           "method": "POST",
           "clientIp": "2001:cdba::3257:9652",

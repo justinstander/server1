@@ -1,6 +1,5 @@
-const status = "405";
-const description = "Method Not Allowed";
-const name = `Http${status}`;
+const status = "422";
+const description = "Unprocessable Entity";
 
 module.exports = class extends Error {
   static get STATUS() {
@@ -14,7 +13,7 @@ module.exports = class extends Error {
   constructor(message, fileName=null, lineNumber=null) {
     super(message, fileName, lineNumber);
 
-    this.name = name;
+    this.name = description;
     this.code = status;
   }
 };

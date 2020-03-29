@@ -3,6 +3,7 @@ const {
   Http403,
   Http404,
   Http405,
+  Http422,
   Http500
 } = require("./errors");
 
@@ -17,9 +18,6 @@ const HTTP_STATUS_200 = "200";
 const REQUEST_URI = "Records[0].cf.request.uri";
 const REQUEST_METHOD = "Records[0].cf.request.method";
 const REQUEST_BODY = "Records[0].cf.request.body";
-
-const ERROR_ACCESS_DENIED_EXCEPTION = "AccessDeniedException";
-const ERROR_VALIDATION_EXCEPTION = "ValidationException";
 
 const getCustomError = (code, message) => {
   const error = new Error(message);
@@ -82,21 +80,24 @@ const forbidden = (body) => response(body, Http403.STATUS, Http403.DESCRIPTION);
 
 const notAllowed = (body) => response(body, Http405.STATUS, Http405.DESCRIPTION);
 
+const unprocessable = (body) => response(body, Http422.STATUS, Http422.DESCRIPTION);
+
 const success = (body) => response(body, HTTP_STATUS_200, "OK");
 
 const getError = ({code, message}) => {
   switch(code) {
     case Http500.STATUS:
       return internalError(message);
-    case ERROR_ACCESS_DENIED_EXCEPTION:
     case Http403.STATUS:
       return forbidden(message);
     case Http404.STATUS:
       return notFound(message);
     case Http405.STATUS:
       return notAllowed(message);
+    case Http422.STATUS:
+      return unprocessable(message);
     default:
-      return notFound(message);
+      return notFound(`${code} ${message}`);
   }
 };
 
