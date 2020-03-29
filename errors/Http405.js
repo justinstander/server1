@@ -3,12 +3,12 @@ const description = "Method Not Allowed";
 
 module.exports = class Http405 extends Error {
   static get STATUS() {
-      return status;
-    }
+    return status;
+  }
 
-    static get DESCRIPTION() {
-      return description;
-    }
+  static get DESCRIPTION() {
+    return description;
+  }
 
   constructor(message, fileName=null, lineNumber=null) {
     super(message, fileName, lineNumber);
