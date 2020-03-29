@@ -28,7 +28,7 @@ const getCustomError = (code, message) => {
   const error = new Error(message);
   error.code = code;
   return error;
-}
+};
 
 // Methods
 const getPropertyFromEvent = (event, property) => _.get(
