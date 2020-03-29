@@ -1,5 +1,4 @@
 const _ = require("lodash");
-const fs = require("fs");
 
 // Constants
 const EMPTY_STRING = "";
