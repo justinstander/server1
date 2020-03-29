@@ -1,16 +1,17 @@
 const _ = require("lodash");
+const {
+  Http403,
+  Http404,
+  Http405,
+  Http500
+} = require("./errors");
 
 // Constants
 const EMPTY_STRING = "";
 const FORWARD_SLASH = "/";
 const BODY_ENCODING = "text";
 
-const HTTP_STATUS_500 = "500";
-const HTTP_STATUS_404 = "404";
-const HTTP_STATUS_403 = "403";
 const HTTP_STATUS_200 = "200";
-
-const HTTP_STATUS_FORBIDDEN = "Forbidden";
 
 // Constants - AWS
 const REQUEST_URI = "Records[0].cf.request.uri";
@@ -19,9 +20,6 @@ const REQUEST_BODY = "Records[0].cf.request.body";
 
 const ERROR_ACCESS_DENIED_EXCEPTION = "AccessDeniedException";
 const ERROR_VALIDATION_EXCEPTION = "ValidationException";
-
-// Constants - NodeJS
-const ERROR_MODULE_NOT_FOUND = "MODULE_NOT_FOUND";
 
 const getCustomError = (code, message) => {
   const error = new Error(message);
@@ -42,16 +40,10 @@ const getModule = (name) => {
       return require("./total-cost/");
     case "search":
       return require("./search/");
-    case HTTP_STATUS_403:
-      throw getCustomError(
-        name,
-        HTTP_STATUS_FORBIDDEN
-      );
+    case Http403.STATUS:
+      throw new Http403(`${name} forbidden`);
     default:
-      throw getCustomError(
-        ERROR_MODULE_NOT_FOUND,
-        "Module Not Found"
-      );
+      throw new Http404(`${name} Not Found`);
   }
 };
 
@@ -82,23 +74,27 @@ const response = (body, status, statusDescription, bodyEncoding = BODY_ENCODING)
   statusDescription
 });
 
-const internalError = (body) => response(body, HTTP_STATUS_500, "Internal Server Error");
+const internalError = (body) => response(body, Http500.STATUS, Http500.DESCRIPTION);
 
-const notFound = (body) => response(body, HTTP_STATUS_404, "Not Found");
+const notFound = (body) => response(body, Http404.STATUS, Http404.DESCRIPTION);
 
-const forbidden = (body) => response(body, HTTP_STATUS_403, "Forbidden");
+const forbidden = (body) => response(body, Http403.STATUS, Http403.DESCRIPTION);
+
+const notAllowed = (body) => response(body, Http405.STATUS, Http405.DESCRIPTION);
 
 const success = (body) => response(body, HTTP_STATUS_200, "OK");
 
 const getError = ({code, message}) => {
   switch(code) {
-    case ERROR_VALIDATION_EXCEPTION:
+    case Http500.STATUS:
       return internalError(message);
     case ERROR_ACCESS_DENIED_EXCEPTION:
-    case HTTP_STATUS_403:
+    case Http403.STATUS:
       return forbidden(message);
-    case ERROR_MODULE_NOT_FOUND:
+    case Http404.STATUS:
       return notFound(message);
+    case Http405.STATUS:
+      return notAllowed(message);
     default:
       return notFound(message);
   }
