@@ -10,5 +10,5 @@ exports.handler = async (awsRequestId, body) => {
   const current = Items[0] || {Total:{S:null}};
   const total = current.Total || {S:null};
   
-  return total.S;
+  return {data: total.S};
 };
