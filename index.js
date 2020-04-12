@@ -64,8 +64,23 @@ const getUri = (event) => getPropertyFromEvent(
   (item) => (item !== EMPTY_STRING)
 );
 
+/**
+ * HTTP Headers
+ *
+ * The Request contains the Origin Header - Set CORS headers
+ * headers['access-control-allow-origin'] = [{key: 'Access-Control-Allow-Origin', value: "*"}];
+ * headers['access-control-allow-methods'] = [{key: 'Access-Control-Allow-Methods', value: "GET, HEAD"}];
+ * headers['access-control-max-age'] = [{key: 'Access-Control-Max-Age', value: "86400"}];
+ */
+const headers = {
+  "access-control-allow-origin": [{key: 'Access-Control-Allow-Origin', value: "http://local.haasandmilan.com:3000"}],
+  "access-control-allow-methods": [{key: 'Access-Control-Allow-Methods', value: "GET, HEAD"}],
+  "access-control-max-age": [{key: 'Access-Control-Max-Age', value: "86400"}]
+};
+
 // Methods - Transaction
 const response = (body, status, statusDescription, bodyEncoding = BODY_ENCODING) => ({
+  headers,
   body,
   bodyEncoding,
   status,
