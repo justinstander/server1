@@ -1,2 +1,2 @@
 ### Active Work In Progress
-#### A cached RESTful API using AWS Lambda with CloudFront Lambda@Edge and Node.js
+#### A cached RESTful API using Node.js, AWS Lambda, DynamoDB, and CloudFront Lambda@Edge
