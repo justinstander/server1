@@ -1,8 +1,18 @@
 const DynamoDB = require("aws-sdk/clients/dynamodb");
 const dynamodb = new DynamoDB();
 
+/**
+ * DynamoDB Table Name
+ * 
+ * @type {String}
+ */
 const TableName = "CostAndUsage";
 
+/**
+ * Deletes all items found in the Table
+ * 
+ * @return undefined
+ */
 const clearItems = async () => {
   const Items = (await dynamodb.scan({
     TableName
@@ -20,6 +30,12 @@ const clearItems = async () => {
   }
 };
 
+/**
+ * Puts the Item in the Table
+ * 
+ * @param  {Object} Item dynamodb item
+ * @return {Object}      
+ */
 const putItem = async (Item) => {
   return (await dynamodb.putItem({
     TableName,
@@ -27,6 +43,10 @@ const putItem = async (Item) => {
   }).promise());
 };
 
+/**
+ * Exports
+ * @type {Object} exports
+ */
 module.exports = {
   clearItems,
   putItem

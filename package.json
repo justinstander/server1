@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/justinstander/server1#readme",
   "dependencies": {
+    "devenv": "^1.0.1",
     "lodash": "^4.17.15"
   },
   "devDependencies": {

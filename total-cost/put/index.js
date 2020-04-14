@@ -1,19 +1,29 @@
 
 const getCostAndUsage = require("./CostExplorer").getCostAndUsage;
-const clearItems = require("./DynamoDB").clearItems;
-const putItem = require("./DynamoDB").putItem;
+const {
+  clearItems,
+  putItem
+} = require("./DynamoDB");
 
+/**
+ * Looks up Cost and Usage,<br/>
+ * Cleares any old values,<br/>
+ * Stores the cost and usage total in the DB.
+ * 
+ * @param  {String} awsRequestId [description]
+ * @return {Object}              [description]
+ */
 exports.handler = async (awsRequestId) => {
   const data = await getCostAndUsage();
-
+  
   await clearItems();
   
-  return await JSON.stringify(putItem({
+  return await putItem({
     AwsRequestId: {
       S: awsRequestId
     }, 
     Total: {
       S: `$${data.ResultsByTime[0].Total.AmortizedCost.Amount}`
     }
-  }));
+  });
 };

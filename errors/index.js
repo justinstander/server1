@@ -4,6 +4,10 @@ const Http405 = require("./Http405");
 const Http422 = require("./Http422");
 const Http500 = require("./Http500");
 
+/**
+ * Exports
+ * @type {Object} exports
+ */
 module.exports = {
   Http403,
   Http404, 
