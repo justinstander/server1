@@ -1,7 +1,7 @@
 const _ = require("lodash");
-const querystring = require('querystring');
+const querystring = require("querystring");
 
-const { Http422 } = require("../../errors");
+const { Http422 } = require("../../../responses");
 
 const DynamoDB = require("aws-sdk/clients/dynamodb");
 const dynamodb = new DynamoDB();

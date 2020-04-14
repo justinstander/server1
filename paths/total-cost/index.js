@@ -1,4 +1,6 @@
-const { Http405 } = require("../errors");
+const { 
+  Http405
+} = require("../../responses");
 
 /**
  * Total Cost

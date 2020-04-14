@@ -1,4 +1,4 @@
-const { Http405 } = require("../errors");
+const NoMethodError = require("../../errors/NoMethodError");
 
 /**
  * API path handler
@@ -16,6 +16,6 @@ exports.handler = async (awsRequestId, method, body, querystring) => {
     case "OPTIONS":
       return null;
     default:
-      throw new Http405(`No Method '${method}'`);
+      throw new NoMethodError(`No Method '${method}'`);
   } 
 };
