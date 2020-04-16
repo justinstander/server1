@@ -1,12 +1,6 @@
 const Response = require("./Response");
 
-/**
- * HTTP Status Code
- * 
- * @type {String}
- */
 const status = "500";
-
 /**
  * Http500
  * 

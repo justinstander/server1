@@ -23,7 +23,7 @@ module.exports = class extends Response {
   constructor(message) {
     super();
 
-    this.status = status;
+    this.status = STATUS;
     this.statusDescription = message;
   }
 };

@@ -1,5 +1,6 @@
 const Response = require("./Response");
 
+const status = "403";
 /**
  * Http403
  * 
@@ -12,7 +13,7 @@ module.exports = class extends Response {
    * @return {String} #status
    */
   static get STATUS() {
-    return "403";
+    return status;
   }
 
   /**
@@ -24,6 +25,6 @@ module.exports = class extends Response {
     super();
 
     this.statusDescription = message;
-    this.code = HttpStatus.Forbidden.status;
+    this.code = STATUS;
   }
 };
