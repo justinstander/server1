@@ -25,6 +25,6 @@ module.exports = class extends Response {
     super();
 
     this.statusDescription = message;
-    this.code = STATUS;
+    this.code = status;
   }
 };

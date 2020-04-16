@@ -1,6 +1,6 @@
 const Response = require("./Response");
 
-const status = "200"
+const status = "200";
 /**
  * Http200
  * 

@@ -16,21 +16,21 @@ module.exports = class extends Object {
    */
   get headers() {
     return {
-      'access-control-allow-origin': [{
-        key: 'Access-Control-Allow-Origin',
+      "access-control-allow-origin": [{
+        key: "Access-Control-Allow-Origin",
         value: "http://localhost:3000"
       }],
-       'access-control-allow-methods': [{
-        key: 'Access-Control-Allow-Methods',
-        value: 'GET,OPTIONS'
+       "access-control-allow-methods": [{
+        key: "Access-Control-Allow-Methods",
+        value: "GET,OPTIONS"
       }],
-       'access-control-allow-headers': [{
-        key: 'Access-Control-Allow-Headers',
-        value: 'content-type'
+       "access-control-allow-headers": [{
+        key: "Access-Control-Allow-Headers",
+        value: "content-type"
       }],
-       'access-control-max-age': [{
-        key: 'Access-Control-Max-Age',
-        value: '86400'
+       "access-control-max-age": [{
+        key: "Access-Control-Max-Age",
+        value: "86400"
       }]
     };
   }
@@ -52,5 +52,5 @@ module.exports = class extends Object {
       status: this.status,
       statusDescription: this.statusDescription
     };
-  };
-}
+  }
+};

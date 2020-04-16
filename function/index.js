@@ -2,7 +2,8 @@ const {
   error,
   Http200,
   Http403,
-  Http404
+  Http404,
+  Http500
 } = require("../responses");
 
 const {
@@ -43,8 +44,9 @@ const PATH_SEARCH = "search";
  */
 const createError = (source) => {
   const { status, statusDescription, name, code } = source;
-  console.log(source);
-  return new error[status || code]().response(statusDescription || name);
+  const errorCode = (status || code) || Http500.STATUS;
+  console.error(source);
+  return new error[errorCode]().response(statusDescription || name);
 };
 
 /**
