@@ -7,13 +7,8 @@
         },
         "request": {
           "uri": "/search",
-          "body": {
-            "action": "read-only",
-            "data": "eyJzZWFyY2giOjd9",
-            "encoding": "base64",
-            "inputTruncated": false
-          },
-          "method": "POST",
+          "method": "GET",
+          "querystring": "search=7",
           "clientIp": "2001:cdba::3257:9652",
           "headers": {
             "host": [
