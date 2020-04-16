@@ -2,8 +2,7 @@ const {
   error,
   Http200,
   Http403,
-  Http404,
-  Http500
+  Http404
 } = require("../responses");
 
 const {
@@ -42,17 +41,15 @@ const PATH_SEARCH = "search";
  * @param  {String} options.code              Error Code
  * @return {Error}                            instance
  */
-const createError = ({ status, statusDescription, name, code }) => {
-  return new error[(status || code) || Http500.STATUS]().response(
-    statusDescription || name
-  );
+const createError = ({ status, code, name, statusDescription }) => {
+  return new error[(status || code || name)]().response(statusDescription);
 };
 
 /**
  * For security reasons, we must use string literals
  * 
  * @param  {String} name Module name
- * @return {String}      Module's string literal name
+ * @return {Object}      module
  *
  * @throws {Http403, Http404}
  */
@@ -63,9 +60,9 @@ const getModule = (name) => {
     case PATH_SEARCH:
       return require("../paths/search/");
     case Http403.STATUS:
-      throw new Http403(`${name} ${Http403.DESCRIPTION}`);
+      throw new error[Http403.STATUS]();
     default:
-      throw new Http404(`${name} ${Http404.DESCRIPTION}`);
+      throw new error[Http404.STATUS]();
   }
 };
 

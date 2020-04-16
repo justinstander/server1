@@ -19,6 +19,6 @@ exports.handler = async (awsRequestId, method, body, querystring) => {
     case "OPTIONS":
       return null;
     default:
-      throw new Http405(`No Method '${method}'`);
+      throw new Http405(method);
   } 
 };

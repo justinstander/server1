@@ -44,10 +44,10 @@ module.exports = class extends Object {
    * @param  {String} bodyEncoding      'text' | 'base64' | default #BODY_ENCODING
    * @return {Object}                   HTTP Response
    */
-  response(body) {
+  response(body = null) {
     return {
       headers: this.headers,
-      body,
+      body: body || this.statusDescription,
       bodyEncoding: this.bodyEncoding,
       status: this.status,
       statusDescription: this.statusDescription

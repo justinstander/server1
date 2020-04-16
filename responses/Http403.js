@@ -21,10 +21,10 @@ module.exports = class extends Response {
    * 
    * @return {Http403} instance
    */
-  constructor(message) {
+  constructor() {
     super();
 
-    this.statusDescription = message;
+    this.statusDescription = "Forbidden";
     this.code = status;
   }
 };

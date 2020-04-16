@@ -20,10 +20,10 @@ module.exports = class extends Response {
    * 
    * @return {Http405} instance
    */
-  constructor(message) {
+  constructor(method) {
     super();
 
     this.status = status;
-    this.statusDescription = message;
+    this.statusDescription = `No Method '${method}'`;
   }
 };
