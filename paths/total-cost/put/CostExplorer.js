@@ -33,9 +33,9 @@ const Metrics = ["AmortizedCost"];
  * Creates a new Date object from <br/>
  * a month and day of this year
  * 
- * @param  {Number} month Month of this year
- * @param  {Number} day   Day of this year
- * @return {Date}       date
+ * @param  {Number}     month Month of this year
+ * @param  {Number}     day   Day of this year
+ * @return {Date}       date instance
  */
 const createDate = (month, day) => {
   return new Date(
