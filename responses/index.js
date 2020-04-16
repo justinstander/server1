@@ -6,13 +6,6 @@ const Http422 = require("./Http422");
 const Http500 = require("./Http500");
 
 /**
- * HTTP Body Encoding
- * 
- * @type {String}
- */
-const BODY_ENCODING = "text";
-
-/**
  * Errors
  * 
  * @type {Object} errors keyed by HTTP Status
@@ -25,6 +18,37 @@ const error = {
   [Http422.STATUS]: Http422,
   [Http500.STATUS]: Http500,
   MODULE_NOT_FOUND: Http500
+};
+
+/**
+ * HTTP Body Encoding
+ * 
+ * @type {String}
+ */
+const BODY_ENCODING = "text";
+
+/**
+ * HTTP Headers
+ * 
+ * @type {Object}
+ */
+const headers = {
+  'access-control-allow-origin': [{
+    key: 'Access-Control-Allow-Origin',
+    value: "http://localhost:3000"
+  }],
+   'access-control-allow-methods': [{
+    key: 'Access-Control-Allow-Methods',
+    value: 'GET,OPTIONS'
+  }],
+   'access-control-allow-headers': [{
+    key: 'Access-Control-Allow-Headers',
+    value: 'content-type'
+  }],
+   'access-control-max-age': [{
+    key: 'Access-Control-Max-Age',
+    value: '86400'
+  }],
 };
 
 /**
