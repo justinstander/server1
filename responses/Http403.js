@@ -1,5 +1,4 @@
 const Response = require("./Response");
-const { HttpStatus } = require("../lib");
 
 /**
  * Http403
@@ -13,7 +12,7 @@ module.exports = class extends Response {
    * @return {String} #status
    */
   static get STATUS() {
-    return HttpStatus.Forbidden.status;
+    return "403";
   }
 
   /**
