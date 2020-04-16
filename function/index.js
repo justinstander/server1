@@ -41,9 +41,8 @@ const PATH_SEARCH = "search";
  * @param  {String} options.code              Error Code
  * @return {Error}                            instance
  */
-const createError = ({ status, code, name, statusDescription }) => (
-  new error[(status || code || name)]().response(statusDescription)
-);
+const createError = ({ status, code, name, statusDescription }) =>
+  new error[(status || code || name)]().response(statusDescription);
 
 /**
  * For security reasons, we must use string literals
