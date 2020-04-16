@@ -6,7 +6,7 @@
           "distributionId": "EXAMPLE"
         },
         "request": {
-          "uri": "/total-costt",
+          "uri": "/total-cost",
           "method": "OPTIONS",
           "clientIp": "2001:cdba::3257:9652",
           "headers": {
