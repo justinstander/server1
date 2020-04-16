@@ -1,3 +1,1 @@
-const { callMethod } = require("./function");
-
-exports.handler = callMethod;
+exports.handler = require("./function").callMethod;
