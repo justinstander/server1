@@ -42,11 +42,10 @@ const PATH_SEARCH = "search";
  * @param  {String} options.code              Error Code
  * @return {Error}                            instance
  */
-const createError = (source) => {
-  const { status, statusDescription, name, code } = source;
-  const errorCode = (status || code) || Http500.STATUS;
-  console.error(source);
-  return new error[errorCode]().response(statusDescription || name);
+const createError = ({ status, statusDescription, name, code }) => {
+  return new error[(status || code) || Http500.STATUS]().response(
+    statusDescription || name
+  );
 };
 
 /**
