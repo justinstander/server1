@@ -10,8 +10,8 @@ const {
  * Cleares any old values,<br/>
  * Stores the cost and usage total in the DB.
  * 
- * @param  {String} awsRequestId [description]
- * @return {Object}              [description]
+ * @param  {String} awsRequestId AWS Request ID
+ * @return {Object}              response from putItem
  */
 exports.handler = async (awsRequestId) => {
   const data = await getCostAndUsage();
