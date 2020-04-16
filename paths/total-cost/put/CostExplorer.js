@@ -35,7 +35,7 @@ const Metrics = ["AmortizedCost"];
  * 
  * @param  {Number}     month Month of this year
  * @param  {Number}     day   Day of this year
- * @return {Date}       date instance
+ * @return {Date}       date  instance
  */
 const createDate = (month, day) => {
   return new Date(
