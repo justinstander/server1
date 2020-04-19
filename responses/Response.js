@@ -10,7 +10,7 @@ const BODY_ENCODING = "text";
  * 
  * @type {Object}
  */
-const headers = {
+const headers = (contentLength) => ({
   "access-control-allow-origin": [{
     key: "Access-Control-Allow-Origin",
     value: "http://localhost:3000"
@@ -26,9 +26,17 @@ const headers = {
    "access-control-max-age": [{
     key: "Access-Control-Max-Age",
     value: "86400"
+  }],
+    "content-length": [{
+    key: "Content-Length",
+    value: contentLength
   }]
-};
+});
 
+/**
+ * Exports
+ * @type {class} export
+ */
 module.exports = class extends Object {
   /**
    * Uses #headers
@@ -41,7 +49,7 @@ module.exports = class extends Object {
    */
   response(body = null) {
     return {
-      headers,
+      headers: headers(Buffer.from(body).length),
       body: body || this.statusDescription,
       bodyEncoding: BODY_ENCODING,
       status: this.status,
