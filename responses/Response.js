@@ -44,12 +44,12 @@ module.exports = class extends Object {
    * @param  {Object} body              JSON Body
    * @param  {String} status            HTTP Status Code
    * @param  {String} statusDescription HTTP Status Description
-   * @param  {String} bodyEncoding      'text' | 'base64' | default #BODY_ENCODING
+   * @param  {String} bodyEncoding      'text' | 'base64' | #BODY_ENCODING
    * @return {Object}                   HTTP Response
    */
   response(body = null) {
     return {
-      headers: headers(Buffer.from(body).length),
+      headers: headers(Buffer.from(body).length.toString()),
       body: body || this.statusDescription,
       bodyEncoding: BODY_ENCODING,
       status: this.status,
