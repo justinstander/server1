@@ -13,7 +13,7 @@ const BODY_ENCODING = "text";
 const headers = {
   "access-control-allow-origin": [{
     key: "Access-Control-Allow-Origin",
-    value: "http://localhost:3000"
+    value: "https://haasandmilan.com"
   }],
    "access-control-allow-methods": [{
     key: "Access-Control-Allow-Methods",
