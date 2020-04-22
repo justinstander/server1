@@ -44,6 +44,7 @@ exports.handler = async (query) => {
       ":awsrequestid": {S: search}
     }
   }).promise();
-  
-  return {data: Items};
+
+  const response = {data: Items};
+  return response;
 };
