@@ -37,11 +37,13 @@ exports.handler = async (query) => {
     throw new Http422("Missing search parameter");
   }
 
-  return {data: (await dynamodb.scan({
+  const { Items } = await dynamodb.scan({
     TableName,
     FilterExpression, 
     ExpressionAttributeValues: {
       ":awsrequestid": {S: search}
     }
-  }).promise()).Items};
+  }).promise();
+  
+  return {data: Items};
 };
