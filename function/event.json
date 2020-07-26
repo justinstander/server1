@@ -1,0 +1,88 @@
+{
+    "headers": {
+        "Cache-Control": "no-cache",
+        "DNT": "1",
+        "Host": "3gtd2rih93.execute-api.us-east-1.amazonaws.com",
+        "Origin": "https://www.websocket.org",
+        "Sec-WebSocket-Key": "+r6GEOcwgtP132UWlL8A0Q==",
+        "Sec-WebSocket-Version": "13",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.20175",
+        "X-Amzn-Trace-Id": "Root=1-5f1d1c1d-c7f98fbedf3a03edf8bad6df",
+        "X-Forwarded-For": "69.201.167.0",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+    },
+    "multiValueHeaders": {
+        "Cache-Control": [
+            "no-cache"
+        ],
+        "DNT": [
+            "1"
+        ],
+        "Host": [
+            "3gtd2rih93.execute-api.us-east-1.amazonaws.com"
+        ],
+        "Origin": [
+            "https://www.websocket.org"
+        ],
+        "Sec-WebSocket-Key": [
+            "+r6GEOcwgtP132UWlL8A0Q=="
+        ],
+        "Sec-WebSocket-Version": [
+            "13"
+        ],
+        "User-Agent": [
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.20175"
+        ],
+        "X-Amzn-Trace-Id": [
+            "Root=1-5f1d1c1d-c7f98fbedf3a03edf8bad6df"
+        ],
+        "X-Forwarded-For": [
+            "69.201.167.0"
+        ],
+        "X-Forwarded-Port": [
+            "443"
+        ],
+        "X-Forwarded-Proto": [
+            "https"
+        ]
+    },
+    "queryStringParameters": {
+        "encoding": "text"
+    },
+    "multiValueQueryStringParameters": {
+        "encoding": [
+            "text"
+        ]
+    },
+    "requestContext": {
+        "routeKey": "sendmessage",
+        "messageId": null,
+        "eventType": "CONNECT",
+        "extendedRequestId": "QRFUkFGWoAMF3AQ=",
+        "requestTime": "26/Jul/2020:06:01:01 +0000",
+        "messageDirection": "IN",
+        "stage": "production",
+        "connectedAt": 1595743261121,
+        "requestTimeEpoch": 1595743261122,
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "cognitoIdentityId": null,
+            "principalOrgId": null,
+            "cognitoAuthenticationType": null,
+            "userArn": null,
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.20175",
+            "accountId": null,
+            "caller": null,
+            "sourceIp": "69.201.167.0",
+            "accessKey": null,
+            "cognitoAuthenticationProvider": null,
+            "user": null
+        },
+        "requestId": "QRFUkFGWoAMF3AQ=",
+        "domainName": "3gtd2rih93.execute-api.us-east-1.amazonaws.com",
+        "connectionId": "QRFUkfw8oAMCLeQ=",
+        "apiId": "3gtd2rih93"
+    },
+    "isBase64Encoded": false
+}

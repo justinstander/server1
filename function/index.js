@@ -12,6 +12,9 @@ const {
   getQuerystring
 } = require("../requests");
 
+const AWS = require('aws-sdk');
+const apiGatewayManagementApi = new AWS.ApiGatewayManagementApi({endpoint:process.env.API_GATEWAY_ENDPOINT});
+
 /**
  * [DEFAULT_MESSAGE]
  * @type {String}
@@ -76,18 +79,34 @@ const getModule = (name) => {
  */
 const callMethod = async (event, {awsRequestId}) => {
   const uri = getUri(event);
-  
-  try {
-    return (uri.length > 0) ? new Http200().response(
-      JSON.stringify(await getModule(uri[0]).handler(
-        awsRequestId,
-        getMethod(event),
-        getBody(event),
-        getQuerystring(event)
-      ))
-    ) : new Http200().response(DEFAULT_MESSAGE);
-  } catch(error) {
-    return createError(error);
+  if(event.requestContext && event.requestContext.routeKey) {
+    console.log('event.requestContext.connectionId',event.requestContext.connectionId);
+    console.log(JSON.stringify(event,null,4));
+    if(event.requestContext.routeKey === 'sendmessage') {
+      var params = {
+        ConnectionId: event.requestContext.connectionId,
+        Data: "Echo"
+      };
+
+      await apiGatewayManagementApi.postToConnection(params).promise();
+      console.log('right'); 
+    }
+    return {
+      statusCode: 200
+    };
+  } else {
+    try {
+      return (uri.length > 0) ? new Http200().response(
+        JSON.stringify(await getModule(uri[0]).handler(
+          awsRequestId,
+          getMethod(event),
+          getBody(event),
+          getQuerystring(event)
+        ))
+      ) : new Http200().response(DEFAULT_MESSAGE);
+    } catch(error) {
+      return createError(error);
+    }
   }
 };
 
