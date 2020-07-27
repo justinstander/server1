@@ -85,7 +85,7 @@ const callMethod = async (event, {awsRequestId}) => {
     if(event.requestContext.routeKey === 'sendmessage') {
       var params = {
         ConnectionId: event.requestContext.connectionId,
-        Data: "Echo"
+        Data: (event.body && JSON.parse(event.body).data) || ""
       };
 
       await apiGatewayManagementApi.postToConnection(params).promise();
