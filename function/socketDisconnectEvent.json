@@ -1,0 +1,92 @@
+{
+    "headers": {
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Cache-Control": "no-cache",
+        "Host": "3gtd2rih93.execute-api.us-east-1.amazonaws.com",
+        "Origin": "http://localhost:3000",
+        "Pragma": "no-cache",
+        "Sec-WebSocket-Extensions": "permessage-deflate; client_max_window_bits",
+        "Sec-WebSocket-Key": "KvV0lUXIn7+8JF61Pg8Utw==",
+        "Sec-WebSocket-Version": "13",
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1",
+        "X-Amzn-Trace-Id": "Root=1-5f25f056-29b724148ddd5d18c63c9c54",
+        "X-Forwarded-For": "69.201.167.0",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+    },
+    "multiValueHeaders": {
+        "Accept-Encoding": [
+            "gzip, deflate, br"
+        ],
+        "Accept-Language": [
+            "en-US,en;q=0.9"
+        ],
+        "Cache-Control": [
+            "no-cache"
+        ],
+        "Host": [
+            "3gtd2rih93.execute-api.us-east-1.amazonaws.com"
+        ],
+        "Origin": [
+            "http://localhost:3000"
+        ],
+        "Pragma": [
+            "no-cache"
+        ],
+        "Sec-WebSocket-Extensions": [
+            "permessage-deflate; client_max_window_bits"
+        ],
+        "Sec-WebSocket-Key": [
+            "KvV0lUXIn7+8JF61Pg8Utw=="
+        ],
+        "Sec-WebSocket-Version": [
+            "13"
+        ],
+        "User-Agent": [
+            "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1"
+        ],
+        "X-Amzn-Trace-Id": [
+            "Root=1-5f25f056-29b724148ddd5d18c63c9c54"
+        ],
+        "X-Forwarded-For": [
+            "69.201.167.0"
+        ],
+        "X-Forwarded-Port": [
+            "443"
+        ],
+        "X-Forwarded-Proto": [
+            "https"
+        ]
+    },
+    "requestContext": {
+        "routeKey": "$disconnect",
+        "messageId": null,
+        "eventType": "CONNECT",
+        "extendedRequestId": "QnJ9lGDoIAMF9YA=",
+        "requestTime": "01/Aug/2020:22:44:38 +0000",
+        "messageDirection": "IN",
+        "stage": "production",
+        "connectedAt": 1596321878891,
+        "requestTimeEpoch": 1596321878892,
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "cognitoIdentityId": null,
+            "principalOrgId": null,
+            "cognitoAuthenticationType": null,
+            "userArn": null,
+            "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1",
+            "accountId": null,
+            "caller": null,
+            "sourceIp": "69.201.167.0",
+            "accessKey": null,
+            "cognitoAuthenticationProvider": null,
+            "user": null
+        },
+        "requestId": "QnJ9lGDoIAMF9YA=",
+        "domainName": "3gtd2rih93.execute-api.us-east-1.amazonaws.com",
+        "connectionId": "QnJ9ldNuIAMCLCA=",
+        "apiId": "3gtd2rih93"
+    },
+    "isBase64Encoded": false
+}

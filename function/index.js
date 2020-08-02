@@ -12,6 +12,12 @@ const {
   getQuerystring
 } = require("../requests");
 
+const {
+  getItems,
+  putItem,
+  deleteItem
+} = require("./DynamoDB");
+
 const AWS = require('aws-sdk');
 const apiGatewayManagementApi = new AWS.ApiGatewayManagementApi({endpoint:process.env.API_GATEWAY_ENDPOINT});
 
@@ -68,32 +74,53 @@ const getModule = (name) => {
   }
 };
 
-/**
- * Calls an API Method
- * 
- * @param  {String} awsRequestId Request ID from Lambda Context
- * @param  {String} name         Method Name
- * @param  {String} method       HTTP Method
- * @param  {Object} body         JSON Data
- * @return {Object}              Result of the API call
- */
 const callMethod = async (event, {awsRequestId}) => {
   const uri = getUri(event);
-  if(event.requestContext && event.requestContext.routeKey) {
-    console.log('event.requestContext.connectionId',event.requestContext.connectionId);
-    console.log(JSON.stringify(event,null,4));
-    if(event.requestContext.routeKey === 'sendmessage') {
-      var params = {
-        ConnectionId: event.requestContext.connectionId,
-        Data: (event.body && JSON.parse(event.body).data) || ""
-      };
 
-      await apiGatewayManagementApi.postToConnection(params).promise();
-      console.log('right'); 
+  if(event.requestContext && event.requestContext.routeKey) {
+    console.log(JSON.stringify(event,null,4));
+    console.log('event.requestContext.connectionId',event.requestContext.connectionId);
+
+    try {
+      switch(event.requestContext.routeKey) {
+        case "$connect":
+          await putItem({
+            connectionId: { S: event.requestContext.connectionId }
+          });
+          break;
+        case "$disconnect":
+          await deleteItem({
+            connectionId: { S: event.requestContext.connectionId }
+          });
+          break;
+        case "sendmessage":
+          console.log('SENDMESSAGE')
+          const connections = await getItems()
+          
+          for(let connection of connections) {
+            const ConnectionId = connection.connectionId.S;
+
+            await apiGatewayManagementApi.postToConnection({
+              ConnectionId,
+              Data: (event.body && JSON.parse(event.body).data) || ""
+            }).promise();
+            
+            console.log(ConnectionId);
+          }
+          
+          console.log("DONE")
+          break;
+        default:
+          console.warn("Unhandled routeKey:",event.requestContext.routeKey)
+      }
+
+      return {
+        statusCode: 200
+      };
+    } catch(error) {
+      console.error(error);
+      return createError(error);
     }
-    return {
-      statusCode: 200
-    };
   } else {
     try {
       return (uri.length > 0) ? new Http200().response(
