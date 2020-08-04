@@ -78,9 +78,6 @@ const callMethod = async (event, {awsRequestId}) => {
   const uri = getUri(event);
 
   if(event.requestContext && event.requestContext.routeKey) {
-    console.log(JSON.stringify(event,null,4));
-    console.log('event.requestContext.connectionId',event.requestContext.connectionId);
-
     try {
       switch(event.requestContext.routeKey) {
         case "$connect":
@@ -94,7 +91,6 @@ const callMethod = async (event, {awsRequestId}) => {
           });
           break;
         case "sendmessage":
-          console.log('SENDMESSAGE')
           const connections = await getItems()
           
           for(let connection of connections) {
@@ -102,13 +98,9 @@ const callMethod = async (event, {awsRequestId}) => {
 
             await apiGatewayManagementApi.postToConnection({
               ConnectionId,
-              Data: (event.body && JSON.parse(event.body).data) || ""
+              Data: (event.body && `[${ConnectionId}] ${(JSON.parse(event.body).data)}`) || ""
             }).promise();
-            
-            console.log(ConnectionId);
           }
-          
-          console.log("DONE")
           break;
         default:
           console.warn("Unhandled routeKey:",event.requestContext.routeKey)
