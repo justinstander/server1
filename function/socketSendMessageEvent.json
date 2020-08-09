@@ -88,6 +88,6 @@
         "connectionId": "QnWf0dhBIAMCIzA=",
         "apiId": "3gtd2rih93"
     },
-    "body": "{\"action\":\"sendmessage\",\"data\":\"Yo yo, it's NOT grease!\"}",
+    "body": "{\"action\":\"sendmessage\",\"data\":\"Yo yo, it's grease!\"}",
     "isBase64Encoded": false
 }

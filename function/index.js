@@ -98,7 +98,7 @@ const callMethod = async (event, {awsRequestId}) => {
 
             await apiGatewayManagementApi.postToConnection({
               ConnectionId,
-              Data: (event.body && `[${ConnectionId}] ${(JSON.parse(event.body).data)}`) || ""
+              Data: (event.body && `[${event.requestContext.connectionId}] ${(JSON.parse(event.body).data)}`) || ""
             }).promise();
           }
           break;
