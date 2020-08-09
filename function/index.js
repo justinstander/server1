@@ -98,7 +98,10 @@ const callMethod = async (event, {awsRequestId}) => {
 
             await apiGatewayManagementApi.postToConnection({
               ConnectionId,
-              Data: (event.body && `[${event.requestContext.connectionId}] ${(JSON.parse(event.body).data)}`) || ""
+              Data: JSON.stringify((event.body && {
+                from: event.requestContext.connectionId,
+                body: JSON.parse(event.body).data
+              }) || {})
             }).promise();
           }
           break;
@@ -110,7 +113,7 @@ const callMethod = async (event, {awsRequestId}) => {
         statusCode: 200
       };
     } catch(error) {
-      console.error(error);
+      console.error("SOCKET",error);
       return createError(error);
     }
   } else {
@@ -124,6 +127,7 @@ const callMethod = async (event, {awsRequestId}) => {
         ))
       ) : new Http200().response(DEFAULT_MESSAGE);
     } catch(error) {
+      console.error("REST",error);
       return createError(error);
     }
   }
