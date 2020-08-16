@@ -75,8 +75,17 @@ const getModule = (name) => {
 };
 
 const handleSocket = async (event) => {
-  if(!process.env.ALLOWED_ORIGINS.includes(event.headers.Origin)) {
-    throw new Error("Ah ah ah, you didn't say the magic word.")
+  console.log('process.env.ALLOWED_ORIGINS',typeof process.env.ALLOWED_ORIGINS)
+  console.log('process.env.ALLOWED_ORIGINS.split(",")', process.env.ALLOWED_ORIGINS.split(","), typeof process.env.ALLOWED_ORIGINS.split(","))
+  console.log('event',event)
+
+  if(event.requestContext.routeKey === "$connect") {
+    if(!process.env.ALLOWED_ORIGINS.split(",").includes(event.headers.Origin)) {
+      console.log('!process.env.ALLOWED_ORIGINS.split(",").includes(event.headers.Origin)')
+      return {
+        statusCode: 405
+      };
+    }
   }
 
   switch(event.requestContext.routeKey) {
@@ -119,7 +128,7 @@ const callMethod = async (event, {awsRequestId}) => {
 
   if(event.requestContext && event.requestContext.routeKey) {
     try {
-      await handleSocket(event)
+      return (await handleSocket(event))
     } catch(error) {
       console.error("SOCKET",error);
       return createError(error);
