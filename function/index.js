@@ -74,44 +74,52 @@ const getModule = (name) => {
   }
 };
 
+const handleSocket = async (event) => {
+  if(!process.env.ALLOWED_ORIGINS.includes(event.headers.Origin)) {
+    throw new Error("Ah ah ah, you didn't say the magic word.")
+  }
+
+  switch(event.requestContext.routeKey) {
+    case "$connect":
+      await putItem({
+        connectionId: { S: event.requestContext.connectionId }
+      });
+      break;
+    case "$disconnect":
+      await deleteItem({
+        connectionId: { S: event.requestContext.connectionId }
+      });
+      break;
+    case "sendmessage":
+      const connections = await getItems()
+      
+      for(let connection of connections) {
+        const ConnectionId = connection.connectionId.S;
+
+        await apiGatewayManagementApi.postToConnection({
+          ConnectionId,
+          Data: JSON.stringify((event.body && {
+            from: event.requestContext.connectionId,
+            body: JSON.parse(event.body).data
+          }) || {})
+        }).promise();
+      }
+      break;
+    default:
+      console.warn("Unhandled routeKey:",event.requestContext.routeKey)
+  }
+
+  return {
+    statusCode: 200
+  };
+}
+
 const callMethod = async (event, {awsRequestId}) => {
   const uri = getUri(event);
 
   if(event.requestContext && event.requestContext.routeKey) {
     try {
-      switch(event.requestContext.routeKey) {
-        case "$connect":
-          await putItem({
-            connectionId: { S: event.requestContext.connectionId }
-          });
-          break;
-        case "$disconnect":
-          await deleteItem({
-            connectionId: { S: event.requestContext.connectionId }
-          });
-          break;
-        case "sendmessage":
-          const connections = await getItems()
-          
-          for(let connection of connections) {
-            const ConnectionId = connection.connectionId.S;
-
-            await apiGatewayManagementApi.postToConnection({
-              ConnectionId,
-              Data: JSON.stringify((event.body && {
-                from: event.requestContext.connectionId,
-                body: JSON.parse(event.body).data
-              }) || {})
-            }).promise();
-          }
-          break;
-        default:
-          console.warn("Unhandled routeKey:",event.requestContext.routeKey)
-      }
-
-      return {
-        statusCode: 200
-      };
+      await handleSocket(event)
     } catch(error) {
       console.error("SOCKET",error);
       return createError(error);

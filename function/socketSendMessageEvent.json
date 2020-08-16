@@ -4,7 +4,7 @@
         "Accept-Language": "en-US,en;q=0.9",
         "Cache-Control": "no-cache",
         "Host": "3gtd2rih93.execute-api.us-east-1.amazonaws.com",
-        "Origin": "http://localhost:3000",
+        "Origin": "https://haasandmilan.com",
         "Pragma": "no-cache",
         "Sec-WebSocket-Extensions": "permessage-deflate; client_max_window_bits",
         "Sec-WebSocket-Key": "KvV0lUXIn7+8JF61Pg8Utw==",
